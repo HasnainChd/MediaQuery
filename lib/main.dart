@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  ResponsiveContainerUI(),
+      //home: const ResponsiveLayout(),
+      home:  const ResponsiveUiTwo(),
     );
   }
 }

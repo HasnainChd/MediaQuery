@@ -1,241 +1,157 @@
 import 'package:flutter/material.dart';
 
-class ResponsiveContainerUI extends StatelessWidget {
-  const ResponsiveContainerUI({super.key});
+import 'container.dart';
+
+class ResponsiveUiTwo extends StatelessWidget {
+  const ResponsiveUiTwo({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
+    double screenWidth = MediaQuery.sizeOf(context).width;
     if (screenWidth < 600) {
-      // Mobile layout
-      return MobileContainerLayout();
+      return const MobileLayout();
     } else if (screenWidth < 1200) {
-      // Tablet layout
-      return const TabletContainerLayout();
+      return const TabletLayout();
     } else {
-      // Desktop layout
-      return const DesktopContainerLayout();
+      return const DesktopLayout();
     }
   }
 }
 
-class MobileContainerLayout extends StatelessWidget {
+class MobileLayout extends StatelessWidget {
+  const MobileLayout({super.key});
+
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.purple,
-        title: const Text('Mobile Layout'),
+      appBar: AppBar(
+        title: const Center(
+          child: Text('Mobile Layout'),
+        ),
       ),
       body: Column(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.2, // 20% of height
-            color: Colors.blue,
-            child: Center(
-              child: Text(
-                'Header',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: MediaQuery.of(context).size.width * 0.05, // 5% of width
-                ),
-              ),
-            ),
-          ),
+          CustomContainer(
+              height: height * 0.2,
+              color: Colors.blue,
+              text: 'Header',
+              fontSize: width * 0.05),
           Expanded(
-            child: Container(
-              color: Colors.green,
-              child: Center(
-                child: Text(
-                  'Main Content',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width * 0.05,
-                  ),
-                ),
-              ),
-            ),
+            child: CustomContainer(
+                color: Colors.green,
+                text: 'Main Content',
+                fontSize: width * 0.05),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.1, // 10% of height
-            color: Colors.orange,
-            child: Center(
-              child: Text(
-                'Footer',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: MediaQuery.of(context).size.width * 0.05,
-                ),
-              ),
-            ),
-          ),
+          CustomContainer(
+              height: height * 0.1,
+              color: Colors.amber,
+              text: 'Footer',
+              fontSize: width * 0.05)
         ],
       ),
     );
   }
 }
 
-class TabletContainerLayout extends StatelessWidget {
-  const TabletContainerLayout({super.key});
+class TabletLayout extends StatelessWidget {
+  const TabletLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tablet Layout'),
+        title: const Center(
+          child: Text('Tablet Layout'),
+        ),
       ),
       body: Column(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.2,
-            color: Colors.blue,
-            child: Center(
-              child: Text(
-                'Header',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                ),
-              ),
-            ),
-          ),
+          CustomContainer(
+              height: height * 0.2,
+              color: Colors.blue,
+              text: 'Header',
+              fontSize: width * 0.04),
           Expanded(
             child: Row(
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.3, // 30% of width
-                  color: Colors.grey,
-                  child: Center(
-                    child: Text(
-                      'Sidebar',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: MediaQuery.of(context).size.width * 0.04,
-                      ),
-                    ),
-                  ),
-                ),
+                CustomContainer(
+                    width: width * 0.3,
+                    color: Colors.grey,
+                    text: 'SideBar',
+                    fontSize: width * 0.04),
                 Expanded(
-                  child: Container(
-                    color: Colors.green,
-                    child: Center(
-                      child: Text(
-                        'Main Content',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                    child: CustomContainer(
+                        color: Colors.green,
+                        text: 'MainContent',
+                        fontSize: width * 0.04)),
               ],
             ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.1,
-            color: Colors.orange,
-            child: Center(
-              child: Text(
-                'Footer',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                ),
-              ),
-            ),
-          ),
+          CustomContainer(
+              height: height * 0.1,
+              color: Colors.amber,
+              text: 'Footer',
+              fontSize: width * 0.04)
         ],
       ),
     );
   }
 }
 
-class DesktopContainerLayout extends StatelessWidget {
-  const DesktopContainerLayout({super.key});
+class DesktopLayout extends StatelessWidget {
+  const DesktopLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Desktop Layout'),
+        title: const Center(
+          child: Text('Desktop Layout'),
+        ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.15,
-              color: Colors.blue,
-              child: Center(
-                child: Text(
-                  'Header',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width * 0.02,
-                  ),
-                ),
-              ),
-            ),
+            CustomContainer(
+                height: height * 0.15,
+                color: Colors.blue,
+                text: 'Header',
+                fontSize: width * .02),
             Expanded(
               child: Row(
                 children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.2, // 20% of width
-                    color: Colors.grey,
-                    child: Center(
-                      child: Text(
-                        'Sidebar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.02,
-                        ),
-                      ),
-                    ),
-                  ),
+                  CustomContainer(
+                      width: width * 0.20,
+                      color: Colors.grey,
+                      text: 'SideBar',
+                      fontSize: width * 0.02),
                   Expanded(
-                    child: Container(
-                      color: Colors.green,
-                      child: Center(
-                        child: Text(
-                          'Main Content',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.width * 0.02,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.2, // 20% of width
-                    color: Colors.purple,
-                    child: Center(
-                      child: Text(
-                        'Extra Sidebar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.02,
-                        ),
-                      ),
-                    ),
-                  ),
+                      child: CustomContainer(
+                          color: Colors.green,
+                          text: 'Main Content',
+                          fontSize: width * .02)),
+
+                  CustomContainer(
+                      width: width * .20,
+                      color: Colors.purple,
+                      text: 'Extra SideBar',
+                      fontSize: width * 8.02)
                 ],
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              color: Colors.orange,
-              child: Center(
-                child: Text(
-                  'Footer',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width * 0.02,
-                  ),
-                ),
-              ),
-            ),
+            CustomContainer(
+                height: height * 0.2,
+                color: Colors.amber,
+                text: 'Footer',
+                fontSize: width * 0.02)
           ],
         ),
       ),
